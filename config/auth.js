@@ -8,7 +8,7 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(id, done) {
   // TODO: Implement.
-  done(err, {id: id});
+  done(null, {id: id});
 });
 
 /**

@@ -24,7 +24,6 @@ module.exports = function(app) {
           failureRedirect : '/'
       }));
 
-
   // Static scripts to be included in templates.
   app.use('/dist/bootstrap', express.static(__dirname + '/../node_modules/bootstrap/dist/'));
   app.use('/dist/font-awesome', express.static(__dirname + '/../node_modules/font-awesome/'));
@@ -35,10 +34,6 @@ function isLoggedIn(req, res, next) {
   // if user is authenticated in the session, carry on
   if (req.isAuthenticated())
     return next();
-  // TODO: remove this after following https://stackoverflow.com/a/30882574/4143394
-  // But lots of steps -- need db.
-  // Right now, always not authed because session not even stored anywhere.
-  return next();
   // if they aren't redirect them to the home page
-  // res.redirect('/');
+  res.redirect('/');
 }
