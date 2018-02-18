@@ -1,5 +1,6 @@
 const dotenv = require('dotenv');
 const express = require('express');
+const mongoose = require('mongoose');
 const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
@@ -10,6 +11,17 @@ const MongoStore = require('connect-mongo')(session);
 dotenv.load({ path: '.env' });
 
 const app = express();
+
+/**
+ * Connect to MongoDB.
+ */
+mongoose.Promise = global.Promise;
+mongoose.connect(process.env.MONGODB_URI);
+mongoose.connection.on('error', (err) => {
+  console.error(err);
+  console.log('MongoDB connection error. Please make sure MongoDB is running.');
+  process.exit();
+});
 
 /**
  * API keys and Passport configuration
