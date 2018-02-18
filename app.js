@@ -7,12 +7,14 @@ const passport = require('passport');
  */
 dotenv.load({ path: '.env' });
 
+const app = express();
+
 /**
  * API keys and Passport configuration
  */
 const passportConfig = require('./config/auth');
-
-const app = express();
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Set template engine
 app.set('view engine', 'ejs');

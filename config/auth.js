@@ -1,6 +1,16 @@
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 
+// Session middleware setup
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  // TODO: Implement.
+  done(err, {id: id});
+});
+
 /**
  * Sign in with Facebook.
  */
@@ -11,6 +21,6 @@ passport.use(new FacebookStrategy({
   profileFields: ['name', 'email', 'link', 'locale', 'timezone', 'gender'],
   passReqToCallback: true
 }, (req, accessToken, refreshToken, profile, done) => {
-  // TODO: understand all the lines and param.
-  done(null);
+  // This will get passed to passport.serializeUser.
+  done(null, profile);
 }));
