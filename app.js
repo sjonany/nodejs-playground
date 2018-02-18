@@ -37,6 +37,7 @@ app.use(session({
     clear_interval: 3600
   })
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 

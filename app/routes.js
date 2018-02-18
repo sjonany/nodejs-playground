@@ -12,6 +12,15 @@ module.exports = function(app) {
     });
   });
 
+   // create todo and send back all todos after creation
+  app.post('/todos', isLoggedIn, function(req, res) {
+    // TODO: separate to a separate handler file
+    // TODO: e2e test w/ form, just print the request, verify form submission works.
+    var user = req.user;
+    var newActionItem = {priority: 1, content: req.action_item_content};
+    Users.findOneAndUpdate({id: req.user.id}, {$push: {action_items: newActionItem}});
+  });
+
   app.get('/logout', function(req, res) {
     // Next auth will require new fb access token.
     req.logout();
