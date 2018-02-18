@@ -4,14 +4,11 @@ const User = require('../models/user');
 
 // Session middleware setup
 passport.serializeUser(function(user, done) {
-  console.log('serialize user id %s', user.id);
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-  console.log("about to desearialize with id = %s", id);
   User.findById(id, (err, user) => {
-    console.log('find by id result=  [%s], [%s]\n', err, user);
     done(err, user);
   });
 });
