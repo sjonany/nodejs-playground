@@ -12,6 +12,12 @@ module.exports = function(app) {
     });
   });
 
+  app.get('/logout', function(req, res) {
+    // Next auth will require new fb access token.
+    req.logout();
+    res.redirect('/');
+  });
+
   /////////////////////////////////////////////
   // Facebook routes
   // Facebook login 
