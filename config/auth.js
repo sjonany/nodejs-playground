@@ -32,14 +32,26 @@ passport.use(new FacebookStrategy({
     } 
     if (user) {
       // User already registered before.
-      return done(null, user);
+      // Refresh some fields.
+      user.facebook.full_name = getFbFullName(profile);
+      user.save((err) => {
+        return done(err, user);
+      });
     } else {
       // User's first time. We have to add new db entry.
       var newUser = new User();
       newUser.facebook.id = profile.id;
+      newUser.facebook.full_name = getFbFullName(profile); 
       newUser.save((err) => {
         done(err, user);
       });
     }
   });
 }));
+
+/**
+ * Get the full name given an FB profile object.
+ */
+function getFbFullName(profile) {
+  return `${profile.name.givenName} ${profile.name.familyName}`;
+}
