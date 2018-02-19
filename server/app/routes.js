@@ -6,14 +6,14 @@ module.exports = function(app) {
     res.render('index.ejs');
   });
 
-  app.get('/profile', isLoggedIn, function(req, res) {
+  app.get('/api/profile', isLoggedIn, function(req, res) {
     res.render('profile.ejs', {
       user : req.user
     });
   });
 
    // create todo and send back all todos after creation
-  app.post('/todos', isLoggedIn, function(req, res) {
+  app.post('/api/todos', isLoggedIn, function(req, res) {
     // TODO: separate to a separate handler file
     // TODO: e2e test w/ form, just print the request, verify form submission works.
     var user = req.user;
@@ -30,10 +30,10 @@ module.exports = function(app) {
   /////////////////////////////////////////////
   // Facebook routes
   // Facebook login 
-  app.get('/auth/facebook', passport.authenticate('facebook'));
+  app.get('/api/auth/facebook', passport.authenticate('facebook'));
 
   // Handle the callback after facebook has authenticated the user
-  app.get('/auth/facebook/callback',
+  app.get('/api/auth/facebook/callback',
       passport.authenticate('facebook', {
           successRedirect : '/profile',
           failureRedirect : '/'
